@@ -277,17 +277,26 @@ section.block{padding:34px 0;border-bottom:1px solid var(--rule)}
   border-bottom:1px solid var(--rule);
 }
 .ledger-head em{font-style:normal;font-family:var(--font-num);letter-spacing:.02em}
+.ledger-head .lh-right{display:flex;align-items:baseline;gap:10px;flex:none}
+.lh-more{
+  border:0;background:none;padding:0;font-family:inherit;cursor:pointer;
+  font-size:11px;letter-spacing:.04em;color:var(--moss);
+  border-bottom:1px solid transparent;transition:border-color .14s;
+}
+.lh-more:hover{border-bottom-color:currentColor}
 .ledger-row{
   display:grid;grid-template-columns:46px 30px minmax(0,1fr) auto 26px;
-  gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--rule);
+  gap:10px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--rule);
+  cursor:pointer;transition:background .14s;
 }
+.ledger-row:hover{background:rgba(61,92,74,.045)}
+.ledger-row:focus-visible{outline:none;background:rgba(61,92,74,.06);box-shadow:inset 0 0 0 1px rgba(61,92,74,.22)}
 .lr-date{font-family:var(--font-num);font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
 .lr-kind{font-size:10.5px;letter-spacing:.04em;white-space:nowrap}
 .lr-kind.k-in{color:var(--moss)}
 .lr-kind.k-out{color:var(--clay)}
 .lr-kind.k-adj{color:var(--gold)}
-.lr-note{font-size:12.5px;color:var(--ink-2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lr-note.muted{color:var(--ink-3);opacity:.65}
+.lr-gap{min-width:0}
 .lr-amt{font-family:var(--font-num);font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .lr-del{
   width:26px;height:26px;display:grid;place-items:center;border:0;background:none;padding:0;
@@ -351,10 +360,18 @@ section.block{padding:34px 0;border-bottom:1px solid var(--rule)}
   border-bottom:1px solid var(--rule);
 }
 .g-month em{font-style:normal;font-family:var(--font-num);letter-spacing:.02em}
-.grow{
-  display:grid;grid-template-columns:52px 30px minmax(0,1fr) auto 26px;
-  gap:10px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--rule);
+.g-row{
+  display:grid;grid-template-columns:52px 30px minmax(0,1fr) auto 14px;
+  gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--rule);
+  cursor:pointer;transition:background .14s;
 }
+.g-row:hover{background:rgba(61,92,74,.045)}
+.g-row:focus-visible{outline:none;background:rgba(61,92,74,.06);box-shadow:inset 0 0 0 1px rgba(61,92,74,.22)}
+.g-chev{
+  font-size:13px;line-height:1;text-align:right;color:var(--ink-3);opacity:.45;
+  transition:color .14s,opacity .14s;
+}
+.g-row:hover .g-chev{color:var(--moss);opacity:.9}
 .g-date{font-family:var(--font-num);font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
 .g-kind{font-size:10.5px;letter-spacing:.04em;white-space:nowrap}
 .g-kind.k-in{color:var(--moss)}
@@ -362,20 +379,11 @@ section.block{padding:34px 0;border-bottom:1px solid var(--rule)}
 .g-kind.k-adj{color:var(--gold)}
 .g-main{display:flex;align-items:baseline;gap:7px;min-width:0}
 .g-acc{
-  flex:none;max-width:118px;font-size:12px;color:var(--ink-2);
+  flex:0 1 auto;min-width:0;max-width:100%;font-size:12px;color:var(--ink-2);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 .g-peer{color:var(--ink-3);font-size:10.5px;flex:none}
-.g-note{font-size:12.5px;color:var(--ink-3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.g-note.muted{opacity:.65}
 .g-amt{font-family:var(--font-num);font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
-.g-del{
-  width:26px;height:26px;display:grid;place-items:center;border:0;background:none;padding:0;
-  color:var(--ink-3);opacity:.45;cursor:pointer;border-radius:4px;
-  transition:opacity .16s,background .16s,color .16s;
-}
-.g-del:hover{opacity:1;color:var(--danger);background:var(--danger-wash)}
-.g-del svg{width:12px;height:12px}
 .gledger-foot{display:flex;justify-content:center;padding:18px 0 4px}
 .gledger-empty{
   text-align:center;padding:46px 20px;margin-top:14px;
@@ -536,6 +544,32 @@ footer{margin-top:8px;padding-top:22px}
 .modal.open .card{opacity:1;transform:none}
 .modal h3{font-size:16.5px;font-weight:600;margin-bottom:6px}
 .modal .lead{font-size:12.5px;color:var(--ink-2);line-height:1.7;margin-bottom:16px}
+
+/* 流水详情 */
+.txd-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:4px}
+.txd-amt{
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  padding:6px 0 16px;margin-bottom:2px;
+}
+.txd-amt b{
+  font-family:var(--font-num);font-size:23px;font-weight:600;letter-spacing:.01em;
+  font-variant-numeric:tabular-nums;
+}
+.txd-amt b.pos{color:var(--moss)}
+.txd-amt b.neg{color:var(--clay)}
+.txd-amt span{font-size:11px;letter-spacing:.1em;color:var(--ink-3)}
+.txd{margin:0;border-top:1px solid var(--rule)}
+.txd-row{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+  padding:9px 0;border-bottom:1px dashed var(--rule);font-size:12.5px;line-height:1.65;
+}
+.txd-row:last-child{border-bottom:0}
+.txd-row > span{flex:none;color:var(--ink-3);font-size:11.5px;letter-spacing:.04em;padding-top:1px}
+.txd-row > b{font-weight:500;color:var(--ink);text-align:right;min-width:0;word-break:break-word}
+.txd-row > b.num{font-family:var(--font-num);font-variant-numeric:tabular-nums;font-weight:600}
+.txd-row > b.muted{color:var(--ink-3);font-weight:400}
+.txd-row > b.pos{color:var(--moss)}
+.txd-row > b.neg{color:var(--clay)}
 .modal-foot{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;flex-wrap:wrap}
 .modal textarea{
   width:100%;height:120px;border:1px solid var(--rule-2);border-radius:6px;background:#fff;
@@ -598,7 +632,6 @@ footer{margin-top:8px;padding-top:22px}
   .detail-actions .btn{flex:1}
   .ledger-row{grid-template-columns:40px 28px minmax(0,1fr) auto 30px;gap:8px}
   .lr-del{width:30px;height:30px}
-  .lr-note{font-size:12px}
   .tx-actions .btn{flex:1;padding:0 8px}
   .viewtabs button{height:44px;padding:0 12px;font-size:13px}
   .ledger-toolbar{padding:12px;gap:10px}
@@ -609,9 +642,9 @@ footer{margin-top:8px;padding-top:22px}
   .lt-spacer{display:none}
   .lt-quick{flex:1 1 100%}
   .lt-quick .btn{flex:1}
-  .grow{grid-template-columns:42px 28px minmax(0,1fr) auto 28px;gap:8px}
-  .g-acc{max-width:76px}
-  .g-del{width:28px;height:28px}
+  .g-row{grid-template-columns:42px 28px minmax(0,1fr) auto 12px;gap:8px}
+  .g-acc{max-width:110px}
+  .txd-amt b{font-size:20px}
   .sheet .panel{
     top:auto;left:0;right:0;width:auto;height:93%;border-radius:16px 16px 0 0;
     transform:translateY(102%);
@@ -950,9 +983,10 @@ footer{margin-top:8px;padding-top:22px}
       <div class="preview" id="txPreview"></div>
     </form>
     <div class="panel-foot">
+      <button class="btn danger sm" type="button" id="txDelBtn" hidden>删除</button>
       <span class="grow"></span>
       <button class="btn" type="button" data-act="close-tx">取消</button>
-      <button class="btn primary" type="submit" form="txForm">记一笔</button>
+      <button class="btn primary" type="submit" form="txForm" id="txSubmit">记一笔</button>
     </div>
   </div>
 </div>
@@ -979,8 +1013,8 @@ var LS_BACKUP_FLAG = 'wdjd.family.sinceBackup.v1';
 var LS_LEGACY_ACK = 'wdjd.family.legacyAck.v1';
 var BACKUP_EVERY = 20;
 
-var APP_VERSION = '1.3.0';
-var APP_BUILT = '2026-11-03';
+var APP_VERSION = '1.4.0';
+var APP_BUILT = '2026-11-09';
 
 var TYPES = {
   '活期存款':   { group:'现金类', risk:1, liq:1 },
@@ -1610,26 +1644,19 @@ function gRowHtml(a, t){
     sign = t.kind === 'in' ? '+' : '−';
     cls = t.kind === 'in' ? 'pos' : '';
   }
-  var noteTxt = t.note;
-  var muted = false;
-  if(!noteTxt){
-    muted = true;
-    noteTxt = t.kind === 'adj' ? ('余额核到 ' + money2(num(t.amount))) : '—';
-  }
   var day = t.date ? t.date.slice(5).replace('-', '.') : '—';
   var peer = t.pairId ? '<span class="g-peer" title="与对方账户配对">⇄</span>' : '';
-  return '<div class="grow">' +
+  var tip = t.note ? ' title="' + esc(t.note) + '"' : '';
+  return '<div class="g-row" role="button" tabindex="0" data-act="tx-detail" data-id="' + esc(a.id) + '" data-tx="' + esc(t.id) + '"' + tip +
+      ' aria-label="查看这笔' + esc(KIND_TXT[t.kind]) + '的详情">' +
     '<span class="g-date">' + esc(day) + '</span>' +
     '<span class="g-kind k-' + t.kind + '">' + esc(KIND_TXT[t.kind]) + '</span>' +
     '<span class="g-main">' +
-      '<span class="g-acc" title="' + esc(a.name) + '">' + esc(a.name) + '</span>' +
+      '<span class="g-acc">' + esc(a.name) + '</span>' +
       peer +
-      '<span class="g-note' + (muted ? ' muted' : '') + '">' + esc(noteTxt) + '</span>' +
     '</span>' +
     '<span class="g-amt ' + cls + '">' + sign + nf2.format(amt) + '</span>' +
-    '<button class="g-del" data-act="tx-del" data-id="' + esc(a.id) + '" data-tx="' + esc(t.id) + '" aria-label="删除这笔记录">' +
-      '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg>' +
-    '</button>' +
+    '<span class="g-chev" aria-hidden="true">›</span>' +
   '</div>';
 }
 
@@ -1954,17 +1981,13 @@ function txRowHtml(a, t){
     sign = t.kind === 'in' ? '+' : '−';
     cls = t.kind === 'in' ? 'pos' : '';
   }
-  var noteTxt = t.note;
-  var muted = false;
-  if(!noteTxt){
-    muted = true;
-    noteTxt = t.kind === 'adj' ? ('余额核到 ' + money2(num(t.amount))) : '—';
-  }
   var day = t.date ? t.date.slice(5).replace('-', '.') : '—';
-  return '<div class="ledger-row">' +
+  var tip = t.note ? ' title="' + esc(t.note) + '"' : '';
+  return '<div class="ledger-row" role="button" tabindex="0" data-act="tx-detail" data-id="' + esc(a.id) + '" data-tx="' + esc(t.id) + '"' + tip +
+      ' aria-label="查看这笔' + esc(KIND_TXT[t.kind]) + '的详情">' +
     '<span class="lr-date">' + esc(day) + '</span>' +
     '<span class="lr-kind k-' + t.kind + '">' + esc(KIND_TXT[t.kind]) + '</span>' +
-    '<span class="lr-note' + (muted ? ' muted' : '') + '">' + esc(noteTxt) + '</span>' +
+    '<span class="lr-gap" aria-hidden="true"></span>' +
     '<span class="lr-amt ' + cls + '">' + sign + nf2.format(amt) + '</span>' +
     '<button class="lr-del" data-act="tx-del" data-id="' + esc(a.id) + '" data-tx="' + esc(t.id) + '" aria-label="删除这笔记录">' +
       '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg>' +
@@ -1977,18 +2000,19 @@ function ledgerHtml(a){
   var n = list.length;
   if(!n){
     return '<div class="ledger">' +
-      '<div class="ledger-head"><span>流水记录</span><em>0 笔</em></div>' +
+      '<div class="ledger-head"><span>流水记录</span><span class="lh-right"><em>0 笔</em></span></div>' +
       '<p class="ledger-empty">还没有流水。用上面的按钮记一笔转入或转出，累计存入会自动跟着变。</p>' +
     '</div>';
   }
   var show = list.slice(0, TX_SHOW);
+  var more = n > TX_SHOW
+    ? '<button type="button" class="lh-more" data-act="tx-viewall" data-id="' + esc(a.id) + '">更多 →</button>'
+    : '';
   var html = '<div class="ledger">' +
-    '<div class="ledger-head"><span>流水记录</span><em>' + n + ' 笔</em></div>';
+    '<div class="ledger-head"><span>流水记录</span>' +
+      '<span class="lh-right"><em>' + n + ' 笔</em>' + more + '</span>' +
+    '</div>';
   show.forEach(function(t){ html += txRowHtml(a, t); });
-  if(n > TX_SHOW){
-    html += '<button class="ledger-more" data-act="tx-viewall" data-id="' + esc(a.id) + '">' +
-      '在流水页查看全部 ' + n + ' 笔 →</button>';
-  }
   return html + '</div>';
 }
 
@@ -2312,6 +2336,31 @@ function submitForm(e){
 /* ========================================================
    5.5 记账：转入 / 转出 / 余额调整
    ======================================================== */
+
+/* 正在编辑的流水 { accId, txId, tx }；为空表示新增 */
+var editingTx = null;
+
+/* 这笔流水对余额的影响（adj 的影响就是差额） */
+function txBalanceEffect(t){
+  if(!t) return 0;
+  if(t.kind === 'in') return t.sync ? num(t.amount) : 0;
+  if(t.kind === 'out') return t.sync ? -num(t.amount) : 0;
+  return num(t.diff);
+}
+
+/* 找到配对的对方账户与那一笔流水 */
+function pairedTxOf(a, t){
+  if(!t || !t.pairId) return null;
+  for(var i = 0; i < state.accounts.length; i++){
+    var o = state.accounts[i];
+    if(o.id === a.id || !Array.isArray(o.tx)) continue;
+    for(var j = 0; j < o.tx.length; j++){
+      if(o.tx[j].pairId === t.pairId) return { a:o, t:o.tx[j] };
+    }
+  }
+  return null;
+}
+
 function applyTxDelta(a, t){
   if(t.kind === 'in'){
     if(t.sync) a.balance = clampNum(num(a.balance) + t.amount);
@@ -2446,17 +2495,44 @@ function togglePeerPop(){
   else closePeerPop();
 }
 
-function openTx(accId, kind){
+function openTx(accId, kind, editId){
   var a = findAccount(accId);
   if(!a) return;
+  if(!Array.isArray(a.tx)) a.tx = [];
+  var t = null;
+  if(editId){
+    for(var i = 0; i < a.tx.length; i++){
+      if(a.tx[i].id === editId){ t = a.tx[i]; break; }
+    }
+  }
+  editingTx = t ? { accId:a.id, txId:t.id, tx:t } : null;
+
   $('#tAccId').value = accId;
-  $('#tAmount').value = '';
-  $('#tDate').value = todayISO();
-  $('#tNote').value = '';
-  $('#tSync').checked = true;
   $('#txBal').innerHTML = '<span>' + esc(a.name) + ' · 当前余额</span><b>' + money2(num(a.balance)) + '</b>';
   fillPeerSelect(a);
-  setTxKind(kind || 'in');
+  setTxKind(t ? t.kind : (kind || 'in'));
+
+  if(t){
+    $('#tAmount').value = String(num(t.amount));
+    $('#tDate').value = t.date || todayISO();
+    $('#tNote').value = t.note || '';
+    $('#tSync').checked = t.sync !== false;
+    var pair = pairedTxOf(a, t);
+    if(pair) selectPeer(pair.a.id);
+    $('#txTitle').textContent = '编辑这笔' + KIND_TXT[t.kind];
+    $('#txKicker').textContent = '保存后按差额重算余额与累计';
+    $('#txSubmit').textContent = '保存修改';
+    $('#txDelBtn').hidden = false;
+  }else{
+    $('#tAmount').value = '';
+    $('#tDate').value = todayISO();
+    $('#tNote').value = '';
+    $('#tSync').checked = true;
+    $('#txSubmit').textContent = '记一笔';
+    $('#txDelBtn').hidden = true;
+  }
+
+  updateTxPreview();
   var sheet = $('#txSheet');
   sheet.classList.add('open');
   sheet.setAttribute('aria-hidden', 'false');
@@ -2466,6 +2542,7 @@ function openTx(accId, kind){
 
 function closeTx(){
   closePeerPop();
+  editingTx = null;
   var sheet = $('#txSheet');
   sheet.classList.remove('open');
   sheet.setAttribute('aria-hidden', 'true');
@@ -2506,6 +2583,9 @@ function updateTxPreview(){
   var kind = $('#tKind').value;
   var raw = $('#tAmount').value;
   var cur = num(a.balance);
+  var isEdit = !!(editingTx && editingTx.tx);
+  /* 编辑时先把这笔自己的影响剥掉，预览才和“新增一笔”一致 */
+  if(isEdit) cur = clampNum(cur - txBalanceEffect(editingTx.tx));
   var v = (raw === '') ? null : clampNum(raw);
 
   if(kind === 'adj'){
@@ -2532,8 +2612,8 @@ function updateTxPreview(){
   if(sync && v !== null) after = kind === 'in' ? cur + v : cur - v;
   pv.innerHTML =
     '<div class="preview-row">' +
-      '<div><span>当前余额</span><b>' + money2(cur) + '</b></div>' +
-      '<div><span>记完后余额</span><b class="' + (after < 0 ? 'neg' : '') + '">' + money2(after) + '</b></div>' +
+      '<div><span>' + (isEdit ? '这笔之前' : '当前余额') + '</span><b>' + money2(cur) + '</b></div>' +
+      '<div><span>' + (isEdit ? '改完后余额' : '记完后余额') + '</span><b class="' + (after < 0 ? 'neg' : '') + '">' + money2(after) + '</b></div>' +
     '</div>' +
     '<p class="formula">' + (sync
       ? '这笔会累加到「累计' + (kind === 'in' ? '存入' : '取出') + '」，同时从年化公式的本金里扣掉，所以不会虚增收益。'
@@ -2546,6 +2626,10 @@ function submitTx(e){
   var a = findAccount($('#tAccId').value);
   if(!a) return;
   if(!Array.isArray(a.tx)) a.tx = [];
+
+  var editing = (editingTx && editingTx.tx && editingTx.accId === a.id) ? editingTx.tx : null;
+  var oldPair = editing ? pairedTxOf(a, editing) : null;
+
   var kind = $('#tKind').value;
   var raw = $('#tAmount').value;
   if(raw === ''){
@@ -2554,7 +2638,9 @@ function submitTx(e){
     return;
   }
   var amount = clampNum(raw);
+  /* 校验与「调整前」都以这笔之前的状态为准：编辑时先剥掉它自己的影响 */
   var cur = num(a.balance);
+  if(editing) cur = clampNum(cur - txBalanceEffect(editing));
   var date = $('#tDate').value || todayISO();
   if(!isDate(date)){ toast('日期格式不对'); return; }
   var note = $('#tNote').value.trim().slice(0, 60);
@@ -2563,7 +2649,7 @@ function submitTx(e){
 
   if(kind === 'adj'){
     if(amount < 0){ toast('余额不能是负数'); $('#tAmount').focus(); return; }
-    if(Math.abs(amount - cur) < 0.005){ toast('和当前余额一样，不需要调整'); return; }
+    if(Math.abs(amount - cur) < 0.005){ toast('和调整前一样，不需要调整'); return; }
   }else{
     if(amount <= 0){ toast('金额要大于 0'); $('#tAmount').focus(); return; }
     if(sync && kind === 'out' && amount > cur + 0.005){
@@ -2574,17 +2660,33 @@ function submitTx(e){
 
   var peer = peerId ? findAccount(peerId) : null;
   if(!peer) peerId = '';
-  if(peer && sync && kind === 'in' && amount > num(peer.balance) + 0.005){
-    toast('「' + peer.name + '」余额不足，无法同步记出');
-    return;
+  if(peer && sync && kind === 'in'){
+    var peerAvail = num(peer.balance);
+    if(oldPair && oldPair.a.id === peer.id) peerAvail = clampNum(peerAvail - txBalanceEffect(oldPair.t));
+    if(amount > peerAvail + 0.005){
+      toast('「' + peer.name + '」余额不足，无法同步记出');
+      return;
+    }
   }
 
-  var at = Date.now();
-  var pairId = peer ? ('p' + at.toString(36) + Math.random().toString(36).slice(2, 5)) : '';
+  var at = editing ? (editing.at || Date.now()) : Date.now();
+  var pairId = peer ? ('p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5)) : '';
 
-  var tx = { id: uid(), kind: kind, amount: amount, date: date, note: note, sync: sync, at: at };
+  var tx = { id: editing ? editing.id : uid(), kind: kind, amount: amount, date: date, note: note, sync: sync, at: at };
   if(kind === 'adj'){ tx.before = cur; tx.diff = clampNum(amount - cur); }
   if(pairId) tx.pairId = pairId;
+
+  /* 编辑：先按差额撤销旧记录（含对方镜像），再按新值重新记一遍 */
+  if(editing){
+    if(oldPair){
+      reverseTxDelta(oldPair.a, oldPair.t);
+      var oi = oldPair.a.tx.indexOf(oldPair.t);
+      if(oi >= 0) oldPair.a.tx.splice(oi, 1);
+    }
+    reverseTxDelta(a, editing);
+    var ai = a.tx.indexOf(editing);
+    if(ai >= 0) a.tx.splice(ai, 1);
+  }
 
   applyTxDelta(a, tx);
   if(tx.sync && (!a.balanceDate || date > a.balanceDate)) a.balanceDate = date;
@@ -2608,20 +2710,20 @@ function submitTx(e){
   }
 
   openIds[a.id] = true;
-  bumpSinceBackup(1);
+  if(!editing) bumpSinceBackup(1);
   var ok = commit({ snapshot: true });
   renderAll();
   closeTx();
 
   var msg;
   if(kind === 'adj'){
-    msg = '已调整，' + (tx.diff >= 0 ? '计入收益 +' : '计入亏损 −') + nf2.format(Math.abs(tx.diff));
+    msg = (editing ? '已修改，' : '已调整，') + (tx.diff >= 0 ? '计入收益 +' : '计入亏损 −') + nf2.format(Math.abs(tx.diff));
   }else{
-    msg = '已记入「' + a.name + '」' + KIND_TXT[kind] + ' ' + money2(amount);
+    msg = (editing ? '已修改「' : '已记入「') + a.name + '」' + KIND_TXT[kind] + ' ' + money2(amount);
   }
   if(peer) msg += '，并同步到「' + peer.name + '」';
   if(ok) toast(msg);
-  checkBackupPrompt(true);
+  if(!editing) checkBackupPrompt(true);
 }
 
 function deleteTx(accId, txId){
@@ -2672,6 +2774,71 @@ function deleteTx(accId, txId){
       toast('已删除这笔记录');
     }
   });
+}
+
+/* 流水详情：点任意一行流水打开 */
+function openTxDetail(accId, txId){
+  var a = findAccount(accId);
+  if(!a || !Array.isArray(a.tx)) return;
+  var t = null;
+  for(var i = 0; i < a.tx.length; i++){
+    if(a.tx[i].id === txId){ t = a.tx[i]; break; }
+  }
+  if(!t) return;
+
+  var d = (t.kind === 'adj') ? num(t.diff) : num(t.amount);
+  var cls, sign, unit;
+  if(t.kind === 'adj'){
+    cls = Math.abs(d) < 0.005 ? '' : (d > 0 ? 'pos' : 'neg');
+    sign = d >= 0 ? '+' : '−';
+    unit = d >= 0 ? '计入收益' : '计入亏损';
+  }else{
+    cls = t.kind === 'in' ? 'pos' : 'neg';
+    sign = t.kind === 'in' ? '+' : '−';
+    unit = t.kind === 'in' ? '转入金额' : '转出金额';
+  }
+
+  function row(k, v, kls){
+    return '<div class="txd-row"><span>' + k + '</span><b' + (kls ? ' class="' + kls + '"' : '') + '>' + v + '</b></div>';
+  }
+
+  var pair = pairedTxOf(a, t);
+  var rows = '';
+  rows += row('账户', esc(a.name));
+  rows += row('类型', esc(KIND_TXT[t.kind]) + (pair ? ' · 已配对 ⇄' : ''));
+  rows += row('日期', esc(fmtDate(t.date)), 'num');
+  if(t.kind === 'adj'){
+    rows += row('调整前', money2(num(t.before)), 'num');
+    rows += row('调整后', money2(num(t.amount)), 'num');
+    rows += row('计入盈亏', sign + nf2.format(Math.abs(d)), 'num ' + cls);
+  }else{
+    rows += row('金额', money2(num(t.amount)), 'num');
+    rows += row('更新余额', t.sync ? '是，账户余额已同步' : '否，只记录累计', t.sync ? '' : 'muted');
+  }
+  if(pair){
+    rows += row('对方账户', esc(pair.a.name) + ' · ' + esc(KIND_TXT[pair.t.kind]) + ' ' + money2(num(pair.t.amount)));
+  }
+  rows += row('备注', t.note ? esc(t.note) : '没有填写', t.note ? '' : 'muted');
+  if(t.at){
+    var dd = new Date(t.at);
+    var stamp = dd.getFullYear() + '-' + String(dd.getMonth() + 1).padStart(2, '0') + '-' +
+      String(dd.getDate()).padStart(2, '0') + ' ' + String(dd.getHours()).padStart(2, '0') + ':' +
+      String(dd.getMinutes()).padStart(2, '0');
+    rows += row('录入时间', stamp, 'num muted');
+  }
+
+  openModal(
+    '<h3>' + esc(KIND_TXT[t.kind]) + '详情</h3>' +
+    '<p class="lead" style="margin-bottom:10px">' + esc(a.name) + ' · ' + esc(fmtDate(t.date)) + '</p>' +
+    '<div class="txd-amt"><span>' + unit + '</span><b class="' + cls + '">' + sign + nf2.format(Math.abs(d)) + '</b></div>' +
+    '<div class="txd">' + rows + '</div>' +
+    '<div class="modal-foot">' +
+      '<button class="btn danger sm" data-act="tx-del" data-id="' + esc(a.id) + '" data-tx="' + esc(t.id) + '">删除</button>' +
+      '<span style="flex:1"></span>' +
+      '<button class="btn" data-act="close-modal">关闭</button>' +
+      '<button class="btn primary" data-act="tx-edit" data-id="' + esc(a.id) + '" data-tx="' + esc(t.id) + '">编辑</button>' +
+    '</div>'
+  );
 }
 
 /* ========================================================
@@ -2971,6 +3138,12 @@ function bindGlobal(){
     else if(act === 'close-editor'){ closeEditor(); }
     else if(act === 'close-tx'){ closeTx(); }
     else if(act === 'tx-open'){ openTx(id, t.getAttribute('data-kind')); }
+    else if(act === 'tx-detail'){ openTxDetail(id, t.getAttribute('data-tx')); }
+    else if(act === 'tx-edit'){
+      var etid = t.getAttribute('data-tx');
+      closeModal();
+      openTx(id, null, etid);
+    }
     else if(act === 'tx-del'){ deleteTx(id, t.getAttribute('data-tx')); }
     else if(act === 'tx-viewall'){
       ledgerFilter.acc = id || '';
@@ -3065,6 +3238,13 @@ function bindGlobal(){
   }, true);
 
   document.addEventListener('keydown', function(e){
+    var el = e.target;
+    if((e.key === 'Enter' || e.key === ' ') && el && el.getAttribute &&
+       el.getAttribute('role') === 'button' && el.getAttribute('data-act')){
+      e.preventDefault();
+      el.click();
+      return;
+    }
     if(e.key !== 'Escape') return;
     var pop = $('#tPeerPop');
     if(pop && !pop.hidden){ closePeerPop(); return; }
@@ -3185,6 +3365,14 @@ function init(){
     if(!el) return;
     el.addEventListener('input', updateTxPreview);
     el.addEventListener('change', updateTxPreview);
+  });
+
+  /* 记账抽屉里的「删除」：只在编辑已有流水时出现 */
+  $('#txDelBtn').addEventListener('click', function(){
+    if(!editingTx) return;
+    var accId = editingTx.accId, txId = editingTx.txId;
+    closeTx();
+    deleteTx(accId, txId);
   });
 
   $('#delBtn').addEventListener('click', function(){
